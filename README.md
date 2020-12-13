@@ -1,22 +1,32 @@
+[![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2Fkingbj940429%2FBJ.DBPool&count_bg=%230090FF&title_bg=%23555555&icon=opslevel.svg&icon_color=%23E7E7E7&title=hits&edge_flat=false)](https://hits.seeyoufarm.com)
+
 # DBPool
-* 기존 db.query에 대한 문제점
-```
-1) Node.js는 기본적으로 비동기식 처리를 한다. 따라서 db.query도 비동식 처리를 하기때문에 
-console.log("1");
-db.query(()=>{}); 
-consoel.log("2");
-라고 가정하면 1, 2 가 출력되고 db.query가 출력된다.(실행은 순서대로 되겠지만.) 따라서 db 결과값이 필요한 경우 
-이 코드를 우선 넘어가버려 null이 출력된다.
-2) 1번에서 말한것에 대해선 대안이 있다. db.query(()=>{})의 함수 안에 res.json(쿼리 결과값)등을 
-넣을수 있겠지만, 이럴 경우 db.query(()=>{}) 라는 함수안에 종속되어 버리고 만다. 결합도가 높아진다.
-3) sequelize라는 npm은 동기식을 지원한다. async/await 사용이 가능하기 때문에 db.query를 기달렸다가 
-결과값을 받고 다음 로직을 수행한다. 하지만 문제는 sequelize는 이 모듈안에 직접 테이블을 생성해야한다. 
-즉 mysql 워크벤치의 테이블과는 연동이 안된다. 심지어 쿼리도 다르기때문에 sequelize를 쓰기 위해선 
-그에 맞는 쿼리문 공부를 다시 해야한다.
-```
-* 해결법
+
+Nodejs Enables asynchronous query statement processing.
+
+![npm](https://img.shields.io/badge/npm-v6.14.4-blue)
+
+## Motivation 
+- Problems with existing db.query
+
+1) Node.js are basically asynchronous. so db.query is also non-synchronous.
+console.log ("1");
+db.query(()=>{});
+consoel.log ("2");
+Assuming that 1 and 2 are printed and db.query is output(The run will be in order.) So if you need a db result,
+This code is passed first and null is printed.
+
+2) There is an alternative to what is said in number 1. The function of db.query()=>{} includes res.json (query result value) etc.
+You can put it in, but in this case, db.Dependent on the function query(()=>{}). The degree of coupling increases.
+
+3) Npm called sequelize supports synchronous. db because async/await is availableI'll wait for a query.
+The following logic is performed after receiving the result value. But the problem is that sequelize must create a table directly in this module.
+That is, it does not relate to the tables on myysql workbench. Even the queries are different, so to write sequelize,
+I have to re-learn the appropriate query sentence.
+
+* Solution
 ```js
-//mysql2 npm을 활용하여 아래와 같이 코드를 구현하여 해결하였다.
+//By utilizing mysql2 npm, the code was implemented and resolved as follows.
 const dbPool = async (queries) => {
     const connection = await pool.getConnection(async conn => conn);
     try {    
@@ -31,16 +41,14 @@ const dbPool = async (queries) => {
   };
 module.exports = dbPool;
 ```
-## 사용법
-1) npm i mysql2 dotenv 을 터미널에서 실행시켜줍니다.
-2) .env에 DB정보를 넣어줍니다.
-3) 알맞은 파일에 DBPool.js 파일을 넣어줍니다.
+## How to Use
+1) Run npm i mysql2 dotenv in the terminal.
+2) Insert DB information into .env.
+3) Insert the DBPool.js file into the appropriate file.
 4)
 ```js
-//사용하고 싶은 라우터에 dbPool 모듈을 추가해주고 쿼리문은 await dbPool("쿼리문") 으로 실행하면 됩니다.
-const dbPool = require('../config/config.js') //DB 연동
-test = await dbPool('select * from test.test'); //실행되는 쿼리문
+//Add the dbPool module to the router you want to use and run the query statement as await dbPool ("querymoon").
+Const dbPool = require('../config/config.js') //DB interlock
+test = awit dbPool('select * from test.test'); //query statement executed
 ```
-### 한계점
-* 동기식으로 처리하기 때문에 대용량을 처리하면 속도가 저하될 수 있습니다.
 
