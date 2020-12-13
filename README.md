@@ -4,6 +4,8 @@
 
 Nodejs Enables asynchronous query statement processing.
 
+Use an external library called mysql2 to synchronize query statements that were processed asynchronously by Node.js.
+
 ![npm](https://img.shields.io/badge/npm-v6.14.4-blue)
 
 ## Motivation 
