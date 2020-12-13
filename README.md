@@ -43,6 +43,7 @@ module.exports = dbPool;
 ```
 ## How to Use
 1) Run npm i mysql2 dotenv in the terminal.
+![mysql2](https://img.shields.io/badge/mysql2-v2.2.5-orange)
 2) Insert DB information into .env.
 3) Insert the DBPool.js file into the appropriate file.
 4)
