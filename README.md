@@ -1,6 +1,6 @@
 [![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2Fkingbj940429%2FBJ.DBPool&count_bg=%230090FF&title_bg=%23555555&icon=opslevel.svg&icon_color=%23E7E7E7&title=hits&edge_flat=false)](https://hits.seeyoufarm.com)
 
-# BJ.DBPool
+# :vhs: BJ.DBPool
 
 Nodejs Enables asynchronous query statement processing.
 
@@ -8,7 +8,7 @@ Use an external library called mysql2 to synchronize query statements that were 
 
 ![npm](https://img.shields.io/badge/npm-v6.14.4-blue)
 
-## Motivation 
+## :interrobang: Motivation 
 - Problems with existing db.query
 
 1) Node.js are basically asynchronous. so db.query is also non-synchronous.
@@ -26,7 +26,7 @@ The following logic is performed after receiving the result value. But the probl
 That is, it does not relate to the tables on myysql workbench. Even the queries are different, so to write sequelize,
 I have to re-learn the appropriate query sentence.
 
-* Solution
+### :low_brightness: Solution
 ```js
 //By utilizing mysql2 npm, the code was implemented and resolved as follows.
 const dbPool = async (queries) => {
@@ -43,7 +43,7 @@ const dbPool = async (queries) => {
   };
 module.exports = dbPool;
 ```
-## How to Use
+## :mag_right: How to Use
 1) Run npm i mysql2 dotenv in the terminal.
 ![mysql2](https://img.shields.io/badge/mysql2-v2.2.5-orange)
 2) Insert DB information into .env.
